@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios"
+  },
+  "dependencies": {
+    "react": "16.5.0",
+    "react-native": "^0.57.8",
+    "react-native-cli": "^2.0.1",
+    "react-native-maps": "^0.22.1"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^5.0.0",
+    "react-test-renderer": "16.6.0-alpha.8af6728",
+    "schedule": "^0.4.0"
+  },
+  "private": true
+}
