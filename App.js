@@ -6,16 +6,17 @@ import MapMarkerGroup from './MapMarkerGroups';
 export default class App extends React.Component {
 constructor(props) {
   super(props)
+  //Setting up input for the Component
     this.state={
       markers:[
           {
-            id:1,
-            title:"Title1",
-            latlng:{  
+            id:1, //Key
+            title:"Title1", //Title
+            latlng:{  //Coordinates
               latitude: 37.58825,
               longitude: -122.4324,
             },
-            color:'green'
+            color:'green' //Color For our Marker
           },
           {
             id:2,
@@ -38,6 +39,7 @@ constructor(props) {
        ]
     };
   }
+  //Render the app
   render() {
     return (
       <View style={styles.container}>
@@ -47,6 +49,7 @@ constructor(props) {
   }
 }
 
+//Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
