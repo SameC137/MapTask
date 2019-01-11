@@ -8,6 +8,7 @@ import Dimensions from 'Dimensions';
 export default class MapMarkerGroup extends React.Component {
     constructor(props) {
         super(props);
+        //Initiate State
         this.state = { 
         region: {
             latitude:0,
@@ -16,6 +17,7 @@ export default class MapMarkerGroup extends React.Component {
             longitudeDelta: 0,
             }, 
         };
+        //Initiate Variables for finding Region
         maxLongitude=this.props.Markers[0].latlng.longitiude;
         minLongitude=this.props.Markers[0].latlng.longitiude;
         maxLatitude=this.props.Markers[0].latlng.latitude;
@@ -23,6 +25,7 @@ export default class MapMarkerGroup extends React.Component {
         longitudeSum=0;
         latitudeSum=0;
         numberOfMarkers=0;
+        //Find Region Values
         this.props.Markers.map((marker)=>{
             if(marker.latlng.longitude>maxLongitude){
                 maxLongitude=marker.longitiude;
@@ -41,15 +44,17 @@ export default class MapMarkerGroup extends React.Component {
             latitudeSum+=marker.latlng.latitude;
             numberOfMarkers+=1;
         })
+        //Set Region Values
         this.state.region.latitude=latitudeSum/numberOfMarkers;
         this.state.region.longitude=longitudeSum/numberOfMarkers;
         this.state.region.latitudeDelta=maxLatitude-minLatitude;
         this.state.region.longitudeDelta=maxLatitude-minLatitude;
-        // Toggle the state every second
-        console.log(this.state.region.latitudeDelta);
+      
+        //Bind the Function to the event
         this.onRegionChange = this.onRegionChange.bind(this);
       }
 
+        //On RegionChange(Pan) handler
       onRegionChange(region) {
         this.setState({ region });
       }
@@ -79,7 +84,7 @@ export default class MapMarkerGroup extends React.Component {
 
 }
 
-
+//Get Dimension of our view window
 var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
