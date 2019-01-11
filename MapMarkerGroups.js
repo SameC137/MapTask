@@ -47,8 +47,21 @@ export default class MapMarkerGroup extends React.Component {
         //Set Region Values
         this.state.region.latitude=latitudeSum/numberOfMarkers;
         this.state.region.longitude=longitudeSum/numberOfMarkers;
-        this.state.region.latitudeDelta=maxLatitude-minLatitude;
-        this.state.region.longitudeDelta=maxLatitude-minLatitude;
+        //Set Region Delta as the max distance from the center
+        if((this.state.region.longitude-maxLongitude)<(this.state.region.longitude-minLongitude)){
+            
+            this.state.region.longitudeDelta=this.state.region.longitude-minLongitude + 1;
+        }else{
+            this.state.region.longitudeDelta=this.state.region.longitude-maxLongitude + 1;
+        }
+        
+        
+         if((this.state.region.latitude-maxLatitude)<(this.state.region.latitude-minLatitude)){
+            
+            this.state.region.latitudeDelta=this.state.region.latitude-minLatitude + 1;
+        }else{
+            this.state.region.latitudeDelta=this.state.region.latitude-maxLatitude + 1;
+        }
       
         //Bind the Function to the event
         this.onRegionChange = this.onRegionChange.bind(this);
