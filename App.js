@@ -13,8 +13,8 @@ constructor(props) {
             id:1, //Marker ID
             title:"Title1", //Title
             latlng:{  //Coordinates
-              latitude: 37.58825,
-              longitude: -122.4324,
+              latitude: 35.58825,
+              longitude: -121.4324,
             },
             color:'green' //Color
           },
