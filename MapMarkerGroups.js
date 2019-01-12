@@ -8,6 +8,7 @@ import Dimensions from 'Dimensions';
 export default class MapMarkerGroup extends React.Component {
     constructor(props) {
         super(props);
+        //Initialize the state variable
         this.state = { 
         region: {
             latitude:0,
@@ -16,6 +17,7 @@ export default class MapMarkerGroup extends React.Component {
             longitudeDelta: 0,
             }, 
         };
+        //Initalize the values used to calculate region
         maxLongitude=this.props.Markers[0].latlng.longitiude;
         minLongitude=this.props.Markers[0].latlng.longitiude;
         maxLatitude=this.props.Markers[0].latlng.latitude;
@@ -23,6 +25,7 @@ export default class MapMarkerGroup extends React.Component {
         longitudeSum=0;
         latitudeSum=0;
         numberOfMarkers=0;
+        //Update the values
         this.props.Markers.map((marker)=>{
             if(marker.latlng.longitude>maxLongitude){
                 maxLongitude=marker.longitiude;
@@ -41,22 +44,12 @@ export default class MapMarkerGroup extends React.Component {
             latitudeSum+=marker.latlng.latitude;
             numberOfMarkers+=1;
         })
+        
+        //Calculate Region as the center(average) of their coordinates
         this.state.region.latitude=latitudeSum/numberOfMarkers;
         this.state.region.longitude=longitudeSum/numberOfMarkers;
-        //Set the latitude delta as that of the farthest point from center
-        if(this.state.region.latitude-maxLatitude < this.state.region.latitude-minLatitude){
-          this.state.region.latitudeDelta= this.state.region.latitude-minLatitude;
-        }else{
-          this.state.region.latitudeDelta= this.state.region.latitude-maxLatitude;
-        }
-        //Set the longitude delta as that of the farthest point from center
-        if(this.state.region.longitude-maxLongitude < this.state.region.longitude-minLongitude){
-          this.state.region.longitudeDelta= this.state.region.longitiude-minLongitude;
-        }else{
-          this.state.region.longitudeDelta= this.state.region.longitude-maxLongitude;
-        }
-
-        //this.state.region.latitudeDelta=maxLatitude-minLatitude;
+        //Calculate the delta which is the distance between the farthest points
+        this.state.region.latitudeDelta=maxLatitude-minLatitude;
         this.state.region.longitudeDelta=maxLatitude-minLatitude;
         console.log(this.state.region.latitudeDelta);
         this.onRegionChange = this.onRegionChange.bind(this);
