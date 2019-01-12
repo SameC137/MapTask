@@ -8,7 +8,6 @@ import Dimensions from 'Dimensions';
 export default class MapMarkerGroup extends React.Component {
     constructor(props) {
         super(props);
-        //Initiate State
         this.state = { 
         region: {
             latitude:0,
@@ -17,7 +16,6 @@ export default class MapMarkerGroup extends React.Component {
             longitudeDelta: 0,
             }, 
         };
-        //Initiate Variables for finding Region
         maxLongitude=this.props.Markers[0].latlng.longitiude;
         minLongitude=this.props.Markers[0].latlng.longitiude;
         maxLatitude=this.props.Markers[0].latlng.latitude;
@@ -25,7 +23,6 @@ export default class MapMarkerGroup extends React.Component {
         longitudeSum=0;
         latitudeSum=0;
         numberOfMarkers=0;
-        //Find Region Values
         this.props.Markers.map((marker)=>{
             if(marker.latlng.longitude>maxLongitude){
                 maxLongitude=marker.longitiude;
@@ -44,30 +41,27 @@ export default class MapMarkerGroup extends React.Component {
             latitudeSum+=marker.latlng.latitude;
             numberOfMarkers+=1;
         })
-        //Set Region Values
         this.state.region.latitude=latitudeSum/numberOfMarkers;
         this.state.region.longitude=longitudeSum/numberOfMarkers;
-        //Set Region Delta as the max distance from the center
-        if((this.state.region.longitude-maxLongitude)<(this.state.region.longitude-minLongitude)){
-            
-            this.state.region.longitudeDelta=this.state.region.longitude-minLongitude + 1;
+        //Set the latitude delta as that of the farthest point from center
+        if(this.state.region.latitude-maxLatitude < this.state.region.latitude-minLatitude){
+          this.state.region.latitudeDelta= this.state.region.latitude-minLatitude;
         }else{
-            this.state.region.longitudeDelta=this.state.region.longitude-maxLongitude + 1;
+          this.state.region.latitudeDelta= this.state.region.latitude-maxLatitude;
         }
-        
-        
-         if((this.state.region.latitude-maxLatitude)<(this.state.region.latitude-minLatitude)){
-            
-            this.state.region.latitudeDelta=this.state.region.latitude-minLatitude + 1;
+        //Set the longitude delta as that of the farthest point from center
+        if(this.state.region.longitude-maxLongitude < this.state.region.longitude-minLongitude){
+          this.state.region.longitudeDelta= this.state.region.longitiude-minLongitude;
         }else{
-            this.state.region.latitudeDelta=this.state.region.latitude-maxLatitude + 1;
+          this.state.region.longitudeDelta= this.state.region.longitude-maxLongitude;
         }
-      
-        //Bind the Function to the event
+
+        //this.state.region.latitudeDelta=maxLatitude-minLatitude;
+        this.state.region.longitudeDelta=maxLatitude-minLatitude;
+        console.log(this.state.region.latitudeDelta);
         this.onRegionChange = this.onRegionChange.bind(this);
       }
 
-        //On RegionChange(Pan) handler
       onRegionChange(region) {
         this.setState({ region });
       }
@@ -97,7 +91,7 @@ export default class MapMarkerGroup extends React.Component {
 
 }
 
-//Get Dimension of our view window
+
 var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
