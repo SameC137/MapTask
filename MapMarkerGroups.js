@@ -51,7 +51,7 @@ export default class MapMarkerGroup extends React.Component {
         //Calculate the delta which is the distance between the farthest points
         this.state.region.latitudeDelta=maxLatitude-minLatitude;
         this.state.region.longitudeDelta=maxLatitude-minLatitude;
-        console.log(this.state.region.latitudeDelta);
+        //Bind the on Region change complete handler
         this.onRegionChange = this.onRegionChange.bind(this);
       }
 
