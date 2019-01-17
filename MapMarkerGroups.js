@@ -66,7 +66,7 @@ export default class MapMarkerGroup extends React.Component {
       }
       
       componentDidUpdate(){
-          console.log("trial");
+          //Fit Markers in Map
            this.map.fitToCoordinates(this.markers, {animated:false});
       }
     render(){
