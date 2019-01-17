@@ -12,12 +12,12 @@ constructor(props) {
           {
             id:"1",
             title:"Title1",
-            image:"black",
+            image:"black",//Image choice use default to use default markers
             latlng:{  
               latitude: 35.58825,
               longitude: -100.4324,
             },
-            color:'green' //Color
+            color:'green' //Color is only used when the value for image is default
           },
           {
             id:"2",
