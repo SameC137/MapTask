@@ -51,9 +51,10 @@ export default class MapMarkerGroup extends React.Component {
         //Calculate Region as the center(average) of their coordinates
         this.state.region.latitude=latitudeSum/numberOfMarkers;
         this.state.region.longitude=longitudeSum/numberOfMarkers;
+        //Calculate the delta which is the distance between the farthest points
         this.state.region.latitudeDelta=maxLatitude-minLatitude;
         this.state.region.longitudeDelta=maxLatitude-minLatitude;
-        console.log(this.markers);
+        //Bind the on Region change complete handler
         this.onRegionChange = this.onRegionChange.bind(this);
 
 
