@@ -4,7 +4,7 @@ import { Marker } from 'react-native-maps';
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import Dimensions from 'Dimensions';
-import {MARKERIMAGES} from './MarkerImages';
+import {MARKERIMAGES} from '../Constants/MarkerImages';
 
 export default class MapMarkerGroup extends React.Component {
     constructor(props) {
@@ -65,7 +65,7 @@ export default class MapMarkerGroup extends React.Component {
         this.setState({ region });
       }
       
-      componentDidUpdate(){
+      fitAllMarkers(){
           //Fit Markers in Map
            this.map.fitToCoordinates(this.markers, {animated:false});
       }
@@ -75,6 +75,7 @@ export default class MapMarkerGroup extends React.Component {
         <MapView
         
           ref={ref => { this.map = ref; }}
+          onLayout={this.fitAllMarkers.bind(this)}
         initialRegion={this.state.region}
         onRegionChangeComplete={this.onRegionChange}
         style={styles.map}>

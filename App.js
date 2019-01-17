@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView from 'react-native-maps';
-import MapMarkerGroup from './MapMarkerGroups';
+import MapMarkerGroup from './Components/MapMarkerGroups';
 
 export default class App extends React.Component {
 constructor(props) {
