@@ -1,13 +1,15 @@
 import React from 'react';
 import { Marker } from 'react-native-maps';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import Dimensions from 'Dimensions';
+import {MARKERIMAGES} from './MarkerImages';
 
 export default class MapMarkerGroup extends React.Component {
     constructor(props) {
         super(props);
+        //Initialize the state variable
         this.state = { 
         region: {
             latitude:0,
@@ -16,18 +18,22 @@ export default class MapMarkerGroup extends React.Component {
             longitudeDelta: 0,
             }, 
         };
-        maxLongitude=this.props.Markers[0].latlng.longitiude;
-        minLongitude=this.props.Markers[0].latlng.longitiude;
+        //Initalize the values used to calculate region
+        maxLongitude=this.props.Markers[0].latlng.longitude;
+        minLongitude=this.props.Markers[0].latlng.longitude;
         maxLatitude=this.props.Markers[0].latlng.latitude;
         minLatitude=this.props.Markers[0].latlng.latitude;
         longitudeSum=0;
         latitudeSum=0;
         numberOfMarkers=0;
+        //Update the values
+        this.markers=new Array();
         this.props.Markers.map((marker)=>{
+            this.markers.push(marker.latlng);
             if(marker.latlng.longitude>maxLongitude){
-                maxLongitude=marker.longitiude;
+                maxLongitude=marker.longitude;
             }
-            if(marker.longitude<minLongitude){
+            if(marker.latlng.longitude<minLongitude){
                 minLongitude=marker.latlng.longitude;
             }
             if(marker.latlng.latitude>maxLatitude){
@@ -41,30 +47,41 @@ export default class MapMarkerGroup extends React.Component {
             latitudeSum+=marker.latlng.latitude;
             numberOfMarkers+=1;
         })
+        
+        //Calculate Region as the center(average) of their coordinates
         this.state.region.latitude=latitudeSum/numberOfMarkers;
         this.state.region.longitude=longitudeSum/numberOfMarkers;
         this.state.region.latitudeDelta=maxLatitude-minLatitude;
         this.state.region.longitudeDelta=maxLatitude-minLatitude;
-        // Toggle the state every second
-        console.log(this.state.region.latitudeDelta);
+        console.log(this.markers);
         this.onRegionChange = this.onRegionChange.bind(this);
+
+
+        
       }
 
       onRegionChange(region) {
         this.setState({ region });
       }
       
+      componentDidUpdate(){
+          console.log("trial");
+           this.map.fitToCoordinates(this.markers, {animated:false});
+      }
     render(){
        return(
         <View style={styles.container}>
         <MapView
-        region={this.state.region}
+        
+          ref={ref => { this.map = ref; }}
+        initialRegion={this.state.region}
         onRegionChangeComplete={this.onRegionChange}
         style={styles.map}>
 
         {this.props.Markers.map(marker => (
             <Marker
             key={marker.id}
+            image={(marker.images!="default")?MARKERIMAGES[marker.image]:null}
             coordinate={marker.latlng}
             title={marker.title}
             pinColor={marker.color}
