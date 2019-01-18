@@ -1,5 +1,5 @@
 import React from 'react';
-import { Marker } from 'react-native-maps';
+import { Marker,PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
@@ -75,7 +75,7 @@ export default class MapMarkerGroup extends React.Component {
        return(
         <View style={styles.container}>
         <MapView
-        
+        provider={PROVIDER_GOOGLE}
           ref={ref => { this.map = ref; }}
           onLayout={this.fitAllMarkers.bind(this)}
         initialRegion={this.state.region}
