@@ -5,6 +5,8 @@ import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import Dimensions from 'Dimensions';
 import {MARKERIMAGES} from '../Constants/MarkerImages';
+import PropTypes from 'prop-types';
+
 
 export default class MapMarkerGroup extends React.Component {
     constructor(props) {
@@ -96,6 +98,22 @@ export default class MapMarkerGroup extends React.Component {
     )
     }
 
+}
+
+
+MapMarkerGroup.propTypes={
+    Markers:PropTypes.arrayOf(PropTypes.shape(
+        {
+            id:PropTypes.string.isRequired,//Id Of The Marker
+            title:PropTypes.string, //Title
+            image:PropTypes.string.isRequired, //Image type of the marker(from the pool of markers) or default for no image
+            latlng:PropTypes.shape({
+              latitude: PropTypes.number.isRequired, //Latitude of the marker
+              longitude: PropTypes.number.isRequired, //longitude of the marker
+            }),
+            color:PropTypes.string //Color of the marker only used when the marker image is set to default
+        }
+    ))
 }
 
 
